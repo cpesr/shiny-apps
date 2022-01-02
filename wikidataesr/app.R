@@ -11,6 +11,16 @@ library(shiny)
 library(shinycssloaders)
 library(wikidataESR)
 library(tidyverse)
+library(ggcpesrthemes)
+
+theme_cpesr_setup(source="https://data.cpesr.fr/wikidataesr/")
+
+etab <- unique(na.omit(select(filter(kpiESR::esr.etab,Groupe=="Universités et assimilés"),Etablissement,url.wikidata)))
+etab$wdid <- substr(etab$url.wikidata,33,100)
+etablist <- etab$wdid
+names(etablist) <- etab$Etablissement
+rand <- sample.int(nrow(etab),1)
+rand.wdid=etab[rand,3]
 
 # Options for Spinner
 options(spinner.color="#0275D8", spinner.color.background="#ffffff", spinner.size=2)
@@ -20,12 +30,13 @@ options(spinner.color="#0275D8", spinner.color.background="#ffffff", spinner.siz
 ui <- fluidPage(
     
     # Application title
-    titlePanel("WikidataESR: Tenter d’y voir clair dans l’ESR"),
+    titlePanel("WikidataESR: Tenter d’y voir clair dans l’ESR (version béta)"),
     
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(width=2,
-                     textInput("wdid", "Identifiant wikidata", value = "Q2033119"),
+                     selectInput("etab", "Etablissement", choices = etablist, selected=rand.wdid),
+                     textInput("wdid", "Identifiant wikidata", value = rand.wdid),
                      checkboxGroupInput("props", "Relations", 
                                         choices = list("associé (P527)" = "associé", 
                                                        "associé de (P361)" = "associé_de", 
@@ -39,11 +50,11 @@ ui <- fluidPage(
                                                        "affilié à (P1416)" = "affilié_à"
                                         ),
                                         selected = "composante"),
-                     sliderInput("depth", "Profondeur", min = 1, max = 10, value = 2),
-                     checkboxInput("active_only", "Actifs seulement", value = TRUE),
+                     sliderInput("depth", "Profondeur de recherche", min = 1, max = 10, value = 1),
+                     checkboxInput("active_only", "Actifs seulement", value = FALSE),
                      h4("Paramètres graphiques"),
                      sliderInput("size", "Taille (%)", min = 0, max = 300, value = 100),
-                     sliderInput("node_size", "Taille noeuds", min = 1, max = 80, value = c(40,70)),
+                     sliderInput("node_size", "Taille noeuds", min = 1, max = 80, value = c(30,60)),
                      sliderInput("label_size", "Taille texte", min = 1, max = 15, value = c(4,6)),
                      sliderInput("label_wrap", "Largeur texte", min = 10, max = 50, value = 15),
                      selectInput("node_label", "Type de label", 
@@ -67,6 +78,7 @@ ui <- fluidPage(
         mainPanel(
             fluidRow(
                 withSpinner(plotOutput("wdPlot", height="600px")),
+                htmlOutput("wdurl"),
                 h3("Avertissements"),
                 h4("Avertissements pour les entités"),
                 tableOutput("vertices_warnings"),
@@ -97,8 +109,16 @@ ui <- fluidPage(
     )
 )
 
+wdurl <- function(wdid) {
+    url <- paste0('https://www.wikidata.org/wiki/',wdid)
+    paste0('<a href=',url,'>',urld,'</a')
+}
+
 # Define server logic required to draw a histogram
-server <- function(input, output) {
+server <- function(input, output,session) {
+    
+    observeEvent(input$etab, { updateTextInput(session, "wdid",value=input$etab)})
+    observeEvent(input$wdid, { updateTextInput(session, "etab",value=input$wdid)})
     
     df.g <- reactive(wdesr_get_graph(input$wdid, input$props, depth = input$depth, 
                         active_only = input$active_only))
@@ -114,7 +134,7 @@ server <- function(input, output) {
                             edge_label = input$edge_label,
                             edge_arrow =  input$edge_arrow,
                             arrow_gap = input$arrow_gap
-                            )
+                            ) + cpesr_cap()
     })
     
     output$vertices_warnings <- renderTable(
@@ -126,6 +146,11 @@ server <- function(input, output) {
             depuis.lien = paste0("https://www.wikidata.org/wiki/",depuis),
             vers.lien =  paste0("https://www.wikidata.org/wiki/",vers)) 
     )
+    
+    output$wdurl <- renderText({
+        url <- paste0('https://www.wikidata.org/wiki/',input$wdid)
+        paste0('<h4 style="text-align:center"><a href=',url,'>',url,'</a></h4>')
+    })
     
 }
 
