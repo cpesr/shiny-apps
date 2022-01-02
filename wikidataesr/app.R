@@ -25,12 +25,11 @@ rand.wdid=etab[rand,3]
 # Options for Spinner
 options(spinner.color="#0275D8", spinner.color.background="#ffffff", spinner.size=2)
 
-
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     
     # Application title
-    titlePanel("WikidataESR: Tenter d’y voir clair dans l’ESR (version béta)"),
+    titlePanel("WikidataESR: Tenter d’y voir clair dans l’ESR (version bêta)"),
     
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
@@ -79,6 +78,9 @@ ui <- fluidPage(
             fluidRow(
                 withSpinner(plotOutput("wdPlot", height="600px")),
                 htmlOutput("wdurl"),
+                p("Cette application représente les données de wikidata à propos de l'ESR. 
+                  Ces représentations sont donc aussi complètes et justes que le sont ces données, 
+                  et peuvent servir d'aide à leur édition."),
                 h3("Avertissements"),
                 h4("Avertissements pour les entités"),
                 tableOutput("vertices_warnings"),
