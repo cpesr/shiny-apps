@@ -16,7 +16,7 @@ shinyUI(fluidPage(
 
     titlePanel("Tableaux de bord de l'ESR"),
     fluidRow(
-      column(2,selectInput(inputId = "groupe", label = "Groupe", choices = NULL)),
+      column(2,selectInput(inputId = "groupe", label = "Groupe", choices = kpiesr_shinycfg$groupes)),
       column(2,selectInput(inputId = "etab", label = "Etablissement", choices = NULL))
     ),
     
@@ -37,6 +37,35 @@ shinyUI(fluidPage(
                 
                 tabPanel("Finances", br(), fluidRow(
                   column(6,plotOutput("fin.abs", height = fig.height),plotOutput("fin.evol", height = fig.height)),
-                  column(6,plotOutput("fin.norm", height = 2*fig.height))))
+                  column(6,plotOutput("fin.norm", height = 2*fig.height)))),
+
+                tabPanel("Series", br(), sidebarLayout(
+                  sidebarPanel(width=2,
+                               tags$head(tags$style("#map{height:75vh !important;}")),
+                               radioButtons("serie_val", "Type de série :",
+                                            c("Valeurs absolues" = "valeur",
+                                              "Evolution Valeur 100" = "evolution"),
+                                            selected = "evolution"
+                                            ),
+                               selectInput(inputId = "serie_vars", 
+                                           label = "Valeur", 
+                                           choices = kpiesr_shinycfg$kpi_list, 
+                                           selected = c("kpi.K.ensPetu","kpi.ETU.P.effectif","kpi.ENS.P.effectif"),
+                                           multiple = TRUE)),
+                  mainPanel(
+                    plotOutput("serie")
+                  ))),
+                
+                tabPanel("Carte", br(), sidebarLayout(
+                  sidebarPanel(width=2,
+                    tags$head(tags$style("#map{height:75vh !important;}")),
+                    selectInput(inputId = "mapx", label = "Axe x", choices = kpiesr_shinycfg$kpi_list, selected = "kpi.ETU.P.effectif"),
+                    selectInput(inputId = "mapy", label = "Axe y", choices = kpiesr_shinycfg$kpi_list, selected = "kpi.ENS.P.effectif"),
+                    selectInput(inputId = "maprentrée", label = "Rentrée", choices = c(2020))
+                  ),
+                  mainPanel(
+                    plotOutput("map")
+                  )))
+                
     )
 ))
