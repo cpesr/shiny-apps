@@ -37,7 +37,7 @@ onorm_style <- kpiesr_style(
 
 
 theme_set(ggcpesrthemes::theme_cpesr() + 
-            theme(plot.title = element_text(hjust=1),
+            theme(plot.title = element_text(hjust=0.5),
                   axis.title = element_text(size = rel(1)),
                   axis.text = element_text(size = rel(1)),
                   panel.spacing = unit(2,"lines"), 
@@ -45,6 +45,7 @@ theme_set(ggcpesrthemes::theme_cpesr() +
                   strip.text = element_text(size=rel(1), 
                                             margin=margin(c(2,0,2,0)))))
 
+theme_cpesr_setup(authors = "Julien Gossa", source = "SIES #DataESR https://cpesr.fr/tableau-de-bord-esr/")
 
 
 axis_text_size_rel <- 0.8
@@ -79,4 +80,4 @@ rm_ytextmargin <- ggplot2::theme(axis.text.y=element_text(margin=margin(r=-5)))
 
 th_abs = rm_lt + rl_margin + rm_xytext + rm_facetmargins + rm_xgrid
 th_norm = rm_lt + rL_margin
-th_evol <- rm_label + rL_margin
+th_evol <- rm_label + rL_margin + theme(legend.position = "bottom")
