@@ -55,15 +55,16 @@ shinyUI(fluidPage(
     fluidRow(
       column(2, selectInput(inputId = "groupe", label = "Groupe", choices = kpiESR::kpiesr_shinycfg$groupes)),
       column(2, selectInput(inputId = "etab", label = "Etablissement", choices = kpiESR::kpiesr_shinycfg$etabs$Ensemble)),
-      column(4, offset = 4, p("Année de référence : 2020-2021"), 
+      column(1, checkboxInput(inputId = "light", label = "Allègement", value = FALSE)),
+      column(4, offset = 3, p("Année de référence : 2020-2021"), 
              p("Contact et demandes de données :", a("data@cpesr.fr",href="mailto:data@cpesr.fr")))
     ),
     
     tabsetPanel(type = "tabs",
                 tabPanel("KPI", br(), 
                          fluidRow(
-                           plotOutput("kpi.norm", height = fig.height*0.9),
-                           plotOutput("kpi.evol", height = fig.height*1.1)),
+                           plotOutput("kpi.norm", height = fig.height*1),
+                           plotOutput("kpi.evol", height = fig.height*1)),
                          fluidRow(
                            hr(),
                            column(6, kpidesc("K") ),
@@ -118,7 +119,7 @@ shinyUI(fluidPage(
                     plotOutput("serie", height = 2*fig.height)
                   ))),
                 
-                tabPanel("Carte", br(), sidebarLayout(
+                tabPanel("Plan", br(), sidebarLayout(
                   sidebarPanel(width=2,
                     tags$head(tags$style("#map{height:75vh !important;}")),
                     selectInput(inputId = "mapx", label = "Axe x", choices = kpiESR::kpiesr_shinycfg$kpi_list, selected = "kpi.K.resPetu"),

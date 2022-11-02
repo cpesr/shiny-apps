@@ -1,12 +1,30 @@
 
+
 rentrée <- 2020
 
 # Style
+
+k_style_light <- kpiesr_style(
+  point_size = 20,
+  line_size = 1,
+  text_size = 6,
+  yaxis_position = "left",
+  evol_y_breaker = scale_100_breaker)
 
 k_style <- kpiesr_style(
   point_size = 20,
   line_size = 1,
   text_size = 6,
+  yaxis_position = "left",
+  evol_x_breaker = scale_minmax_breaker,
+  evol_y_breaker = scale_breaker)
+
+o_style_light <- kpiesr_style(
+  point_size = 20,
+  line_size = 0.7,
+  text_size = 6,
+  primaire_margin = 1.25,
+  strip_labeller = lfc_dont_labeller,
   yaxis_position = "left",
   evol_y_breaker = scale_100_breaker)
 
@@ -17,7 +35,9 @@ o_style <- kpiesr_style(
   primaire_margin = 1.25,
   strip_labeller = lfc_dont_labeller,
   yaxis_position = "left",
-  evol_y_breaker = scale_100_breaker)
+  evol_x_breaker = scale_minmax_breaker,
+  evol_y_breaker = scale_breaker)
+
 
 lfc_pc_labeller_custom <- function(labels) {
   return(
@@ -40,6 +60,7 @@ theme_set(ggcpesrthemes::theme_cpesr() +
             theme(plot.title = element_text(hjust=0.5),
                   axis.title = element_text(size = rel(1)),
                   axis.text = element_text(size = rel(1)),
+                  panel.grid.minor.y = element_blank(),
                   panel.spacing = unit(2,"lines"), 
                   plot.margin = margin(0,0,0,0),
                   strip.text = element_text(size=rel(1), 
