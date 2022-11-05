@@ -102,6 +102,15 @@ shinyUI(fluidPage(
                     column(6, kpidesc("FIN") ),
                     column(6, kpiguide) )),
 
+                tabPanel("Immobilier", br(), fluidRow(
+                  column(6,plotOutput("imo.abs", height = fig.height),plotOutput("imo.evol", height = fig.height)),
+                  column(6,plotOutput("imo.norm", height = 2*fig.height))),
+                  fluidRow(
+                    hr(),
+                    column(6, kpidesc("IMO") ),
+                    column(6, kpiguide) )),
+                
+                
                 tabPanel("Series", br(), sidebarLayout(
                   sidebarPanel(width=2,
                                tags$head(tags$style("#map{height:75vh !important;}")),

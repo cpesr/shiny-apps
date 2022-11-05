@@ -22,6 +22,7 @@ shinyServer(function(input, output, session) {
     #o_style_react <- reactive( { })
   
     plots <- reactive({kpiESR::kpiesr_plot_all(rentrée, id = input$etab, groupe = input$groupe, 
+                                               experimental = TRUE,
                                                style.k = if(input$light) k_style_light else k_style, 
                                                style.o =if(input$light) o_style_light else o_style,
                                                style.o.norm = onorm_style)})
@@ -45,6 +46,10 @@ shinyServer(function(input, output, session) {
     output$fin.norm <- renderPlot({ plots()$fin.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res)
     output$fin.evol <- renderPlot({ plots()$fin.evol + th_evol + ggtitle("Evolutions") }, res= fig.res)
 
+    output$imo.abs <- renderPlot({ plots()$imo.abs + th_abs + ggtitle("Valeurs absolues") }, res= fig.res)
+    output$imo.norm <- renderPlot({ plots()$imo.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res)
+    output$imo.evol <- renderPlot({ plots()$imo.evol + th_evol + ggtitle("Evolutions") }, res= fig.res)
+    
     output$serie <- renderPlot(res= fig.res, { 
       kpiESR::kpiesr_plot_line(id = input$etab, vars = input$serie_vars, val = input$serie_val) + theme_cpesr_cap()
     })
