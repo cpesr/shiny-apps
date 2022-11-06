@@ -25,30 +25,48 @@ shinyServer(function(input, output, session) {
                                                experimental = TRUE,
                                                style.k = if(input$light) k_style_light else k_style, 
                                                style.o =if(input$light) o_style_light else o_style,
-                                               style.o.norm = onorm_style)})
+                                               style.o.norm = onorm_style)}) %>%
+      bindCache(rentrée, input$etab, input$groupe)
   
-    output$kpi.norm <- renderPlot({ plots()$k.norm + rm_lt + rL_margin + ggtitle("Indicateurs clés de performance")}, res= fig.res)
-    output$kpi.evol <- renderPlot({ plots()$k.evol + th_evol + ggtitle("Evolutions") + cpesr_cap() }, res= fig.res)
+    output$kpi.norm <- renderPlot({ plots()$k.norm + rm_lt + rL_margin + ggtitle("Indicateurs clés de performance")}, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$kpi.evol <- renderPlot({ plots()$k.evol + th_evol + ggtitle("Evolutions") + cpesr_cap() }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
     
-    output$etu.abs <- renderPlot({ plots()$etu.abs + th_abs + ggtitle("Valeurs absolues")}, res= fig.res)
-    output$etu.norm <- renderPlot({ plots()$etu.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res)
-    output$etu.evol <- renderPlot({ plots()$etu.evol + th_evol + ggtitle("Evolutions") }, res= fig.res)
+    output$etu.abs <- renderPlot({ plots()$etu.abs + th_abs + ggtitle("Valeurs absolues")}, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$etu.norm <- renderPlot({ plots()$etu.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$etu.evol <- renderPlot({ plots()$etu.evol + th_evol + ggtitle("Evolutions") }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
 
-    output$bia.abs <- renderPlot({ plots()$bia.abs + th_abs + ggtitle("Valeurs absolues") }, res= fig.res)
-    output$bia.norm <- renderPlot({ plots()$bia.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res)
-    output$bia.evol <- renderPlot({ plots()$bia.evol + th_evol + ggtitle("Evolutions") }, res= fig.res)
+    output$bia.abs <- renderPlot({ plots()$bia.abs + th_abs + ggtitle("Valeurs absolues") }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$bia.norm <- renderPlot({ plots()$bia.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$bia.evol <- renderPlot({ plots()$bia.evol + th_evol + ggtitle("Evolutions") }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
 
-    output$ens.abs <- renderPlot({ plots()$ens.abs + th_abs + ggtitle("Valeurs absolues") }, res= fig.res)
-    output$ens.norm <- renderPlot({ plots()$ens.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res)
-    output$ens.evol <- renderPlot({ plots()$ens.evol + th_evol + ggtitle("Evolutions") }, res= fig.res)
+    output$ens.abs <- renderPlot({ plots()$ens.abs + th_abs + ggtitle("Valeurs absolues") }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$ens.norm <- renderPlot({ plots()$ens.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$ens.evol <- renderPlot({ plots()$ens.evol + th_evol + ggtitle("Evolutions") }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
     
-    output$fin.abs <- renderPlot({ plots()$fin.abs + th_abs + ggtitle("Valeurs absolues") }, res= fig.res)
-    output$fin.norm <- renderPlot({ plots()$fin.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res)
-    output$fin.evol <- renderPlot({ plots()$fin.evol + th_evol + ggtitle("Evolutions") }, res= fig.res)
+    output$fin.abs <- renderPlot({ plots()$fin.abs + th_abs + ggtitle("Valeurs absolues") }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$fin.norm <- renderPlot({ plots()$fin.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$fin.evol <- renderPlot({ plots()$fin.evol + th_evol + ggtitle("Evolutions") }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
 
-    output$imo.abs <- renderPlot({ plots()$imo.abs + th_abs + ggtitle("Valeurs absolues") }, res= fig.res)
-    output$imo.norm <- renderPlot({ plots()$imo.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res)
-    output$imo.evol <- renderPlot({ plots()$imo.evol + th_evol + ggtitle("Evolutions") }, res= fig.res)
+    output$imo.abs <- renderPlot({ plots()$imo.abs + th_abs + ggtitle("Valeurs absolues") }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$imo.norm <- renderPlot({ plots()$imo.norm + th_norm + ggtitle("Valeurs normalisées") + theme_cpesr_cap() }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
+    output$imo.evol <- renderPlot({ plots()$imo.evol + th_evol + ggtitle("Evolutions") }, res= fig.res) %>%
+      bindCache(rentrée, input$etab, input$groupe)
     
     output$serie <- renderPlot(res= fig.res, { 
       kpiESR::kpiesr_plot_line(id = input$etab, vars = input$serie_vars, val = input$serie_val) + theme_cpesr_cap()
