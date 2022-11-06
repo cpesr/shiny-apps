@@ -75,7 +75,8 @@ shinyServer(function(input, output, session) {
     
     output$map <- renderPlot(res = fig.res, { 
       kpiESR::kpiesr_plot_map(input$maprentrée, id = input$etab, groupe = input$groupe, 
-                              xvar = input$mapx, yvar = input$mapy ) +
+                              xvar = input$mapx, yvar = input$mapy,
+                              smooth = input$smooth) +
         scale_x_continuous(name=kpiesr_lfc_desc[[input$mapx]], labels=kpiesr_lfc_y_labels[[input$mapx]] ) +
         scale_y_continuous(name=kpiesr_lfc_desc[[input$mapy]], labels=kpiesr_lfc_y_labels[[input$mapy]]) + 
         theme_cpesr_cap()})

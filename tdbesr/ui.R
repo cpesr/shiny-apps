@@ -133,7 +133,8 @@ shinyUI(fluidPage(
                     tags$head(tags$style("#map{height:75vh !important;}")),
                     selectInput(inputId = "mapx", label = "Axe x", choices = kpiESR::kpiesr_shinycfg$kpi_list, selected = "kpi.K.resPetu"),
                     selectInput(inputId = "mapy", label = "Axe y", choices = kpiESR::kpiesr_shinycfg$kpi_list, selected = "kpi.K.ensPetu"),
-                    selectInput(inputId = "maprentrée", label = "Rentrée", choices = c(2020))
+                    selectInput(inputId = "maprentrée", label = "Rentrée", choices = c(2020)),
+                    checkboxInput(inputId = "smooth", label = "Régression linéaire", value = TRUE)
                   ),
                   mainPanel(
                     plotOutput("map")
