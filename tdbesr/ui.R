@@ -11,13 +11,15 @@ library(shiny)
 
 fig.height <- 300
 
-kpidesc <- function(kpi) {
+kpidesc <- function(kpi, experimental = FALSE) {
   res <- h3("Dictionnaire des variables")
   for(i in seq(1,length(kpiESR::kpiesr_lfc[[kpi]]$factors))) {
       res <- paste(res,tags$li(
         tags$b(kpiESR::kpiesr_lfc[[kpi]]$labels[i]), " : ", kpiESR::kpiesr_lfc[[kpi]]$desc[i]))
   }
-  res <- paste(res, h3("Avertissement"), "Ces représentations sont issues de traitements automatiques de données ouvertes, et sont donc potentiellement sujettes à des erreurs.")
+  res <- paste(res, h3("Avertissement"), "Ces représentations sont issues de traitements automatisés de données ouvertes, et sont donc potentiellement sujettes à des erreurs.")
+  if (experimental)
+    res <- paste(res, p(tags$b("En particulier, les représentations de cette page sont exprimentales et les données mal consolidées. La plus grande prudence est de mise.")))
   return(tags$ul(HTML(res)))
 }
 
@@ -107,7 +109,7 @@ shinyUI(fluidPage(
                   column(6,plotOutput("imo.norm", height = 2*fig.height))),
                   fluidRow(
                     hr(),
-                    column(6, kpidesc("IMO") ),
+                    column(6, kpidesc("IMO", experimental = TRUE) ),
                     column(6, kpiguide) )),
                 
                 
