@@ -15,7 +15,8 @@ library(ggcpesrthemes)
 source("tdbesr-plots.R")
 fig.res = 96
 
-shinyOptions(cache = cachem::cache_mem(max_size = 1e9))
+#shinyOptions(cache = cachem::cache_mem(max_size = 1e9))
+shinyOptions(cache = cachem::cache_disk(file.path(dirname(tempdir()), "tdbesr-cache")))
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
