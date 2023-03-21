@@ -59,7 +59,7 @@ shinyUI(fluidPage(
       column(2, selectInput(inputId = "etab", label = "Etablissement", choices = kpiESR::kpiesr_shinycfg$etabs$Ensemble)),
       column(1, checkboxInput(inputId = "light", label = "Allègement", value = FALSE)),
       column(4, offset = 3, p("Année de référence : 2020-2021"), 
-             p("Contact et demandes de données :", a("data@cpesr.fr",href="mailto:data@cpesr.fr")))
+             p("Contact et demandes de données :", a("intranet@cpesr.fr",href="mailto:intranet@cpesr.fr")))
     ),
     
     tabsetPanel(type = "tabs",
