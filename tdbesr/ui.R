@@ -58,7 +58,7 @@ shinyUI(fluidPage(
       column(2, selectInput(inputId = "groupe", label = "Groupe", choices = kpiESR::kpiesr_shinycfg$groupes)),
       column(2, selectInput(inputId = "etab", label = "Etablissement", choices = kpiESR::kpiesr_shinycfg$etabs$Ensemble)),
       column(1, checkboxInput(inputId = "light", label = "Allègement", value = FALSE)),
-      column(4, offset = 3, p("Année de référence : 2020-2021"), 
+      column(4, offset = 3, p("Année de référence : 2021-2022"), 
              p("Contact et demandes de données :", a("intranet@cpesr.fr",href="mailto:intranet@cpesr.fr")))
     ),
     
